@@ -5,6 +5,7 @@ const canva = document.getElementById("canvas");
 const fallSpeed = 5;
 const flySpeed = 12 * fallSpeed;
 var spacePressed = false;
+let startPlay = false;
 let isLose = false;
 let minBlockHeight = 20;
 let maxBlockHeight = 70;
@@ -23,16 +24,15 @@ const pointDieAudio = document.getElementById("pointDieAudio");
 const wingAudio = document.getElementsByTagName("source")[0];
 const hiteAudio = document.getElementsByTagName("source")[1];
 const dieAudio = document.getElementsByTagName("source")[2];
-
+let update;
+let createBlocks;
 let score = 0;
 let bestScore = 0;
 let requestAnimationFrameId;
 
 let xPosition = 0;
-
-let update = setInterval(updateGame, 50);
-let createBlocks = setInterval(createBlock, 3000);
-moveBackground();
+document.addEventListener("touchstart", letsPlay);
+document.addEventListener("click", letsPlay);
 
 window.addEventListener("resize", function () {
   var width = window.innerWidth;
@@ -49,6 +49,19 @@ window.addEventListener("resize", function () {
 
   // code to execute using the new screen size
 });
+
+function letsPlay() {
+  console.log("111111111111");
+  if (startPlay == false) {
+    console.log("okkkkk");
+    startPlay = true;
+    document.removeEventListener("touchstart", letsPlay);
+    document.removeEventListener("click", letsPlay);
+    update = setInterval(updateGame, 50);
+    createBlocks = setInterval(createBlock, 3000);
+    moveBackground();
+  }
+}
 
 function moveBackground() {
   xPosition--;
@@ -284,16 +297,16 @@ function fly() {
 }
 
 document.addEventListener("click", () => {
-  if (isLose === false) fly();
+  if (isLose === false && startPlay === true) fly();
 });
 
 document.addEventListener("touchstart", () => {
-  if (isLose === false) fly();
+  if (isLose === false && startPlay === true) fly();
 });
 
 function checkBtn() {
   document.body.onkeyup = function (e) {
-    if (e.code === "Space" && isLose === false) {
+    if (e.code === "Space" && isLose === false && startPlay === true) {
       fly();
     }
   };
