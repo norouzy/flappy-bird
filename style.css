@@ -27,9 +27,6 @@ html {
 #canvas {
   width: 100%;
   height: 100vh;
-  /* width: 600px;
-  height: 300px; */
-  /* background-color: bisque; */
   border: 2px solid black;
   position: relative;
 
@@ -135,7 +132,7 @@ html {
 }
 
 #score-box {
-  font-size: 74px;
+  font-size: 5.2rem;
   position: absolute;
   text-align: center;
   left: 2%;
@@ -144,10 +141,20 @@ html {
   z-index: 9999;
 }
 
+#menu-box {
+  display: none;
+  position: relative;
+  /* visibility: hidden; */
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 3.2rem;
+  gap: 4.8rem;
   position: absolute;
   /* border: 1px solid red; */
   width: 40rem;
@@ -157,6 +164,7 @@ html {
 }
 
 .result-title {
+  margin-top: 2rem;
   font-size: 5.4rem;
   text-align: center;
   letter-spacing: 0.5rem;
@@ -195,12 +203,13 @@ html {
 .btn {
   /* border: 2px solid black; */
   background-color: rgb(256, 137, 57);
-  width: 10rem;
+  width: 12rem;
   /*height: 2.5rem; */
   text-align: center;
   font-size: 2.4rem;
   box-shadow: 0px 0px 0px 4px #fff inset;
   color: #fff;
+  cursor: pointer;
 }
 
 .text {
@@ -212,11 +221,8 @@ html {
   font-size: 3.6rem;
   margin-top: 0.8rem;
 }
-.menu-box {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
+
+.btn:active {
+  /* background-color: #777; */
+  transform: scale(0.7);
 }

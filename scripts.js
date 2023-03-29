@@ -2,27 +2,31 @@
 
 const canva = document.getElementById("canvas");
 
+const fallSpeed = 5;
+const flySpeed = 12 * fallSpeed;
+var spacePressed = false;
+let isLose = false;
+
 let blocks = [];
 let token;
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// canvas.width = window.innerWidth;
+// canvas.height = window.innerHeight;
 
-// const update = setInterval(updateGame, 50);
-// const createBlocks = setInterval(createBlock, 3000);
-// moveBackground();
 const audio = document.getElementById("audio");
 const pointDieAudio = document.getElementById("pointDieAudio");
 const wingAudio = document.getElementsByTagName("source")[0];
 const hiteAudio = document.getElementsByTagName("source")[1];
 const dieAudio = document.getElementsByTagName("source")[2];
-let isLose = false;
-// const pointAudio = document.getElementsByTagName("source")[0];
-console.log(wingAudio);
 
 let score = 0;
+let bestScore = 0;
 let requestAnimationFrameId;
-console.log(window.innerHeight);
+
 let xPosition = 0;
+
+let update = setInterval(updateGame, 50);
+let createBlocks = setInterval(createBlock, 3000);
+moveBackground();
 
 function moveBackground() {
   xPosition--;
@@ -59,8 +63,9 @@ function imgFly(src = "img/bird-up.png") {
 
 function fall() {
   const rect = bird.getBoundingClientRect();
-  if (rect.y > window.innerHeight - 45) {
-    bird.style.top = 140 + "px";
+  if (rect.y > window.innerHeight - rect.width - 0.08 * window.innerHeight) {
+    console.log("detected ground ");
+    stop();
   }
 }
 
@@ -112,7 +117,6 @@ function detectCollision(birdRect, blockRect, className, block) {
         playerTop < upBlockTop)
     ) {
       console.log("detected up ");
-      console.log(birdRect);
       isDetect = true;
       stop();
     }
@@ -183,24 +187,32 @@ function removeBlock(bk, blockRect, index) {
 }
 
 function stop() {
+  if (bestScore < score) bestScore = score;
   isLose = true;
   clearInterval(update);
   clearInterval(createBlocks);
   cancelAnimationFrame(requestAnimationFrameId);
+  // menuBox.style.removeProperty("display");
+  const menuBox = document.getElementById("menu-box");
+  const scoreText = document.querySelector(".border p:nth-child(2)");
+  const bestScoreText = document.querySelector(".border p:nth-child(4)");
+
+  scoreText.innerHTML = score;
+  bestScoreText.innerHTML = bestScore;
+  menuBox.style.display = "flex";
+
   pointDieAudio.setAttribute("src", "sound/hit.mp3");
   pointDieAudio.play();
   audio.setAttribute("src", "sound/die.mp3");
   audio.play();
-  // bird.style.top = "";
+
   const sheet = document.styleSheets[0]; // Replace 0 with the index of the stylesheet you want to modify
-  const keyframes = sheet.cssRules[6]; // Replace 0 with the index of the keyframes rule you want to modify
+  const keyframes = sheet.cssRules[7]; // Replace 0 with the index of the keyframes rule you want to modify
+
   const birdRect = bird.getBoundingClientRect();
   const fallHeightPercent = birdRect.bottom + birdRect.y;
   const windowHeight = window.innerHeight;
   const a = windowHeight / 2 - birdRect.y - birdRect.width - 5;
-  console.log(birdRect);
-  console.log(fallHeightPercent);
-  console.log(a);
   const birdElement = document.getElementById("bird");
 
   birdElement.style.removeProperty("top");
@@ -210,13 +222,34 @@ function stop() {
     "0% { transform: translate(0%, " + -1 * a + "px) rotate(0deg);",
     0
   );
+}
 
-  // Modify the 100% keyframe
-  // keyframes.appendRule(
-  //   "100% { transform: translate(-50%," + (fallHeightPercent + 15 + "px);}"),
-  //   1
-  // );
-  console.log(keyframes);
+function restart() {
+  console.log("hiii");
+  score = 0;
+  xPosition = 0;
+  spacePressed = false;
+  isLose = false;
+  blocks.forEach((e, index) => {
+    const bk = document.getElementById(e.obj.id);
+    // blocks.splice(index, 1);
+    bk.remove();
+  });
+  let scoreText = document.getElementsByClassName("score-text")[0];
+  scoreText.innerHTML = 0;
+  console.log(blocks);
+  blocks = [];
+
+  const menuBox = document.getElementById("menu-box");
+  const birdElement = document.getElementById("bird");
+
+  birdElement.classList.remove("bird-lose");
+  birdElement.classList.add("top");
+  menuBox.style.display = "none";
+
+  update = setInterval(updateGame, 50);
+  createBlocks = setInterval(createBlock, 3000);
+  moveBackground();
 }
 
 function fly() {
@@ -236,12 +269,8 @@ document.addEventListener("touchstart", () => {
   if (isLose === false) fly();
 });
 
-const fallSpeed = 5;
-const flySpeed = 12 * fallSpeed;
-var spacePressed = false;
 function checkBtn() {
   document.body.onkeyup = function (e) {
-    console.log(e);
     if (e.code === "Space" && isLose === false) {
       fly();
     }
@@ -264,4 +293,6 @@ function updateGame() {
 // keyframes.insertRule("100% { transform: translate(75%, 500%); }", 1);
 // keyframes.deleteRule(2); // Delete the original 100% keyframe
 
-// console.log(keyframes);
+// console.log(findInStylesheet(data));
+
+a = [{ a: "a" }, { b: "b" }, { c: "c" }];
