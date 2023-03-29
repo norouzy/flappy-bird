@@ -11,7 +11,7 @@ FONT SIZE SYSTEM (px) 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 /
 @font-face {
   font-family: "acme";
   /* src: url("fonts/acme-5.ttf") format("truetype"); */
-  src: url("fonts/FB.woff") format("truetype"); /* Safari, Android, iOS */
+  src: url("../fonts/FB.woff") format("truetype"); /* Safari, Android, iOS */
 }
 
 body {
@@ -34,7 +34,7 @@ html {
   top: 0;
   left: 0;
   width: 100%;
-  background-image: url("img/background.jpg");
+  background-image: url("../img/background.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -76,13 +76,13 @@ html {
 }
 
 .block-up {
-  background-image: url("img/block_3.png");
+  background-image: url("../img/block_3.png");
   top: 0;
   right: 0;
   transition: right 45ms ease-in;
   position: absolute;
   /* background-color: chartreuse; */
-  background-image: url("img/block_3.png");
+  background-image: url("../img/block_3.png");
 }
 
 .block-bottom {
@@ -91,11 +91,11 @@ html {
   right: 0;
   transition: right 45ms ease-in;
   /* background-color: blue; */
-  background-image: url("img/block_3.png");
+  background-image: url("../img/block_3.png");
 }
 
 .block-head-up {
-  background-image: url("img/block_head.png");
+  background-image: url("../img/block_head.png");
   background-size: contain;
   background-repeat: no-repeat;
   height: 100%;
@@ -108,7 +108,7 @@ html {
 }
 
 .block-head-bottom {
-  background-image: url("img/block_head.png");
+  background-image: url("../img/block_head.png");
   background-size: contain;
   background-repeat: no-repeat;
   height: 25%;
@@ -120,7 +120,7 @@ html {
   /* background-color: rgb(0, 128, 11); */
   background-position: center;
   background-size: contain;
-  background-image: url("img/block_3.png");
+  background-image: url("../img/block_3.png");
 }
 
 #ground {

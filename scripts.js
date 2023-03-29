@@ -6,11 +6,17 @@ const fallSpeed = 5;
 const flySpeed = 12 * fallSpeed;
 var spacePressed = false;
 let isLose = false;
-
+let minBlockHeight = 20;
+let maxBlockHeight = 70;
+let blockWidth = 5;
+if (window.innerWidth <= 600) {
+  minBlockHeight = 20;
+  maxBlockHeight = 50;
+}
 let blocks = [];
 let token;
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 const audio = document.getElementById("audio");
 const pointDieAudio = document.getElementById("pointDieAudio");
@@ -27,6 +33,22 @@ let xPosition = 0;
 let update = setInterval(updateGame, 50);
 let createBlocks = setInterval(createBlock, 3000);
 moveBackground();
+
+window.addEventListener("resize", function () {
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+  if (width <= 600) {
+    minBlockHeight = 20;
+    maxBlockHeight = 50;
+    blockWidth = 12;
+  } else {
+    minBlockHeight = 20;
+    maxBlockHeight = 70;
+    blockWidth = 5;
+  }
+
+  // code to execute using the new screen size
+});
 
 function moveBackground() {
   xPosition--;
@@ -72,7 +94,7 @@ function fall() {
 function createBlock() {
   let blockPosition;
   token = generateRandomToken();
-  const randHeight = randInt(20, 70);
+  const randHeight = randInt(minBlockHeight, maxBlockHeight);
   blockPosition = randInt(0, 1)
     ? (blockPosition = "up")
     : (blockPosition = "bottom");
@@ -80,7 +102,7 @@ function createBlock() {
   // canva.innerHTML += `<div id=block-${token}><img class="block-head"><img  class="block-${blockPosition}" width="5%" height="${randHeight}%"></div>`;
   canva.innerHTML += `<div class="block-${blockPosition} block-img" id=block-${token}><div class="block-head-${blockPosition}"></div></div>`;
   let block = document.getElementById(`block-${token}`);
-  block.style.width = "5%";
+  block.style.width = blockWidth + "%";
   block.style.height = randHeight + "%";
   const block_info = {
     id: token,
@@ -295,4 +317,4 @@ function updateGame() {
 
 // console.log(findInStylesheet(data));
 
-a = [{ a: "a" }, { b: "b" }, { c: "c" }];
+// a = [{ a: "a" }, { b: "b" }, { c: "c" }];
